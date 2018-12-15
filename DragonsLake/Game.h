@@ -1,16 +1,15 @@
 #pragma once
-#include "Framework.h"
+#include "Engine.h"
+#include "Player.h"
 
-class Game : public Framework
+class Game
 {
+	friend class Engine;
+private:
+	static Engine* engine;
 public:
-	Game();
-	void PreInit(int& width, int& height, bool& fullscreen) override;
-	bool Init() override;
-	void Close() override;
-	bool Tick() override;
-	void onMouseMove(int x, int y, int xrelative, int yrelative) override;
-	void onMouseButtonClick(FRMouseButton button, bool isReleased) override;
-	void onKeyPressed(FRKey k) override;
-	void onKeyReleased(FRKey k) override;
+	static Player* player;
+	static vector2<int> screenResolution;
+	static void AddObject(Object* obj);
+	static double DeltaTime();
 };

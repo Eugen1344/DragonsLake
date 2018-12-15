@@ -1,43 +1,15 @@
 #include "Game.h"
 
-Game::Game()
+Engine* Game::engine;
+vector2<int> Game::screenResolution;
+Player* Game::player;
+
+void Game::AddObject(Object* obj)
 {
+	engine->AddObject(obj);
 }
 
-void Game::PreInit(int& width, int& height, bool& fullscreen)
+double Game::DeltaTime()
 {
-	width = 800;
-	height = 600;
-	fullscreen = false;
-}
-
-bool Game::Init()
-{
-	return true;
-}
-
-void Game::Close()
-{
-}
-
-bool Game::Tick()
-{
-	drawTestBackground();
-	return false;
-}
-
-void Game::onMouseMove(int x, int y, int xrelative, int yrelative)
-{
-}
-
-void Game::onMouseButtonClick(FRMouseButton button, bool isReleased)
-{
-}
-
-void Game::onKeyPressed(FRKey k)
-{
-}
-
-void Game::onKeyReleased(FRKey k)
-{
+	return engine->deltaTime;
 }
