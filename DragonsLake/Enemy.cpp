@@ -3,10 +3,11 @@
 
 Enemy::Enemy(vec2 pos, Sprite* sprite) : Object(pos, sprite)
 {
-
+	speed = 60 * (rand() % 10 + 1);
 }
 
 void Enemy::Tick()
 {
-	pos.x += Game::DeltaTime() * 60 * (rand() % 10 + 1);
+	vec2 lookAt = (Game::GetPlayer().pos - pos).normalized();
+	pos += lookAt * (Game::DeltaTime() * speed);
 }

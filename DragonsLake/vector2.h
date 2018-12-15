@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 
 template<class T>
 class vector2
@@ -14,30 +15,57 @@ public:
 	{
 	}
 
-	vector2<T> operator+(vector2<T> op)
+	vector2<T> normalized()
+	{
+		T len = length();
+		if (len == 0)
+			return *this;
+		return *this / len;
+	}
+
+	T length()
+	{
+		return static_cast<T>(sqrt(x * x + y * y));
+	}
+
+	vector2<T> operator+(const vector2<T> op) const
 	{
 		return vector2<T>(x + op.x, y + op.y);
 	}
 
-	vector2<T> operator-(vector2<T> op)
+	vector2<T> operator-(const vector2<T> op) const
 	{
 		return vector2<T>(x - op.x, y - op.y);
 	}
 
-	vector2<T> operator*(T op)
+	vector2<T>& operator+=(const vector2<T> op)
+	{
+		x += op.x;
+		y += op.y;
+		return *this;
+	}
+
+	vector2<T>& operator-=(const vector2<T> op)
+	{
+		x -= op.x;
+		y -= op.y;
+		return *this;
+	}
+
+	vector2<T> operator*(const T op) const
 	{
 		return vector2<T>(x * op, y * op);
 	}
 
-	vector2<T> operator/(T op)
+	vector2<T> operator/(const T op) const
 	{
 		return vector2<T>(x / op, y / op);
 	}
 
 	template<class F>
-	operator vector2<F>() const
+	explicit operator vector2<F>() const
 	{
-		return vector2<F>((F)x, (F)y);
+		return vector2<F>(static_cast<F>(x), static_cast<F>(y));
 	}
 };
 

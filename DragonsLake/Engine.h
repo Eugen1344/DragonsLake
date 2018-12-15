@@ -2,6 +2,7 @@
 #include <vector>
 #include "Framework.h"
 #include "Object.h"
+#include <map>
 
 using namespace std;
 
@@ -9,11 +10,13 @@ class Engine : public Framework
 {
 private:
 	vector<Object*> objects;
+	map<Object*, bool> objectChanges;
 public:
 	double deltaTime;
 	double prevTickCount;
 	Engine();
 	void AddObject(Object* obj);
+	void DeleteObject(Object* obj);
 	void PreInit(int& width, int& height, bool& fullscreen) override;
 	bool Init() override;
 	void Close() override;

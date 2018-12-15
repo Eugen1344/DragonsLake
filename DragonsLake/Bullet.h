@@ -4,6 +4,8 @@
 class Bullet : public Object
 {
 public:
-	Bullet(vec2 pos, Sprite* sprite);
+	double speed = 500;
+	vec2 direction;
+	Bullet(vec2 pos, vec2 direction, Sprite* sprite);
 	void Tick() override;
 };
