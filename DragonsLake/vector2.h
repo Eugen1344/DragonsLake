@@ -15,6 +15,11 @@ public:
 	{
 	}
 
+	T distance(const vector2<T> vec)
+	{
+		return sqrt((vec.x - x) * (vec.x - x) + (vec.y - y) * (vec.y - y));
+	}
+
 	vector2<T> normalized()
 	{
 		T len = length();

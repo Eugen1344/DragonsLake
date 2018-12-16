@@ -12,6 +12,8 @@ private:
 	vector<Object*> objects;
 	map<Object*, bool> objectChanges;
 public:
+	bool restart = false;
+	bool close = false;
 	double deltaTime;
 	double prevTickCount;
 	Engine();
@@ -21,6 +23,8 @@ public:
 	bool Init() override;
 	void Close() override;
 	bool Tick() override;
+	void DetectCollisions();
+	bool IsColliding(Object* obj);
 	void onMouseMove(int x, int y, int xrelative, int yrelative) override;
 	void onMouseButtonClick(FRMouseButton button, bool isReleased) override;
 	void onKeyPressed(FRKey k) override;

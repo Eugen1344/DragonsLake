@@ -31,6 +31,7 @@
     <ClCompile Include="Cursor.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Collider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -54,6 +55,7 @@
     <ClInclude Include="Cursor.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Collider.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt" />

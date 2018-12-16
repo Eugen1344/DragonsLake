@@ -35,20 +35,25 @@ bool Engine::Init()
 	showCursor(false);
 	AddObject(new Cursor(vec2(), createSprite("reticle.png")));
 
-	Sprite* sprite = createSprite("enemy.png");
-	Enemy* enemy = new Enemy(vec2(100, 100), sprite);
 	Sprite* playerSprite = createSprite("avatar.jpg");
 	vector2<int> spriteSize;
 	getSpriteSize(playerSprite, spriteSize.x, spriteSize.y);
+
 	Player* player = new Player(static_cast<vector2<double>>((Game::screenResolution - spriteSize) / 2), playerSprite);
 	AddObject(player);
 	Game::player = player;
-	AddObject(enemy);
+
+	Sprite* enemySprite = createSprite("enemy.png");
+	Game::SpawnEnemies(Game::enemiesCount, enemySprite);
 	return true;
 }
 
 void Engine::Close()
 {
+	for (Object* obj : objects)
+	{
+		delete obj;
+	}
 }
 
 bool Engine::Tick()
@@ -71,10 +76,41 @@ bool Engine::Tick()
 		vector2<double> pos = obj->pos;
 		if (!obj->isGui)
 			pos -= Camera::pos;
-		drawSprite(obj->sprite, round(pos.x), round(pos.y));
+		drawSprite(obj->sprite, int(round(pos.x)), int(round(pos.y)));
 	}
+
+	DetectCollisions();
+
 	deltaTime = (getTickCount() - prevTickCount) / 1000.0;
 	prevTickCount = getTickCount();
+
+	return restart;
+}
+
+void Engine::DetectCollisions()
+{
+	for (unsigned i = 0; i < objects.size(); i++)
+	{
+		Object& first = *objects[i];
+		for (unsigned j = i + 1; j < objects.size(); j++)
+		{
+			Object& second = *objects[j];
+			if (first.collider.IsColliding(second.collider, first.pos, second.pos))
+			{
+				first.onCollisionStay(second);
+				second.onCollisionStay(first);
+			}
+		}
+	}
+}
+
+bool Engine::IsColliding(Object* obj)
+{
+	for (Object* collisionObj : objects)
+	{
+		if (obj->collider.IsColliding(collisionObj->collider, obj->pos, collisionObj->pos))
+			return true;
+	}
 	return false;
 }
 

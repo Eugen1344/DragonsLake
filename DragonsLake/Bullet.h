@@ -8,4 +8,5 @@ public:
 	vec2 direction;
 	Bullet(vec2 pos, vec2 direction, Sprite* sprite);
 	void Tick() override;
+	void onCollisionStay(Object& obj) override;
 };

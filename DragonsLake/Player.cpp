@@ -1,8 +1,9 @@
 #include "Player.h"
 #include "Game.h"
 #include "Camera.h"
+#include <iostream>
 
-Player::Player(vec2 pos, Sprite* sprite) : Object(pos, sprite), speed(200), rifle(3, createSprite("bullet.png"))
+Player::Player(vec2 pos, Sprite* sprite) : Object(pos, sprite), speed(200), rifle(Game::ammoCount, createSprite("bullet.png"))
 {
 }
 
@@ -60,4 +61,8 @@ void Player::onMouseButtonClick(FRMouseButton button, bool isReleased)
 	vec2 direction = Game::MouseWorldPos() - pos;
 	if (direction.x != 0 || direction.y != 0)
 		rifle.Shoot(pos, direction);
+}
+
+void Player::onCollisionStay(Object& obj)
+{
 }

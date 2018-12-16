@@ -14,4 +14,5 @@ public:
 	void onKeyPressed(FRKey k) override;
 	void onKeyReleased(FRKey k) override;
 	void onMouseButtonClick(FRMouseButton button, bool isReleased) override;
+	void onCollisionStay(Object& obj) override;
 };

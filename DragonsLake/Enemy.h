@@ -7,4 +7,5 @@ public:
 	double speed;
 	Enemy(vec2 pos, Sprite* sprite);
 	void Tick() override;
+	void onCollisionStay(Object& obj) override;
 };
