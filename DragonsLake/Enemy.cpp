@@ -26,7 +26,7 @@ void Enemy::onCollisionStay(Object& obj)
 {
 	if (dynamic_cast<Player*>(&obj))
 	{
-		cout << "You have lost!" << endl;
+		cout << "You lose!" << endl;
 		Game::RestartGame();
 	}
 }

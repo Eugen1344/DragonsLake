@@ -20,16 +20,16 @@ void Player::onKeyPressed(FRKey k)
 	switch (k)
 	{
 	case FRKey::RIGHT:
-		movement.x += 1;
+		movement.x = 1;
 		break;
 	case FRKey::LEFT:
-		movement.x -= 1;
+		movement.x = -1;
 		break;
 	case FRKey::DOWN:
-		movement.y += 1;
+		movement.y = 1;
 		break;
 	case FRKey::UP:
-		movement.y -= 1;
+		movement.y = -1;
 		break;
 	default:;
 	}
@@ -40,16 +40,16 @@ void Player::onKeyReleased(FRKey k)
 	switch (k)
 	{
 	case FRKey::RIGHT:
-		movement.x -= 1;
+		movement.x = 0;
 		break;
 	case FRKey::LEFT:
-		movement.x += 1;
+		movement.x = 0;
 		break;
 	case FRKey::DOWN:
-		movement.y -= 1;
+		movement.y = 0;
 		break;
 	case FRKey::UP:
-		movement.y += 1;
+		movement.y = 0;
 		break;
 	default:;
 	}

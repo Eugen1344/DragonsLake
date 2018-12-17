@@ -4,7 +4,8 @@
 
 Bullet::Bullet(vec2 pos, vec2 direction, Sprite* sprite) : Object(pos, sprite), direction(direction)
 {
-
+	collider.isTrigger = true;
+	collider.isActive = true;
 }
 
 void Bullet::Tick()
