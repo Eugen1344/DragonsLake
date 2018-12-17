@@ -9,18 +9,19 @@ private:
 	static Engine* engine;
 	static Player* player;
 	static vec2 mousePos;
-	static vector2<int> screenResolution;
+	static Settings settings;
 public:
-	static int enemiesCount;
-	static int ammoCount;
-	static vector2<int> mapSize;
+	static Settings GetSettings();
+	void SetSettings(Settings& settings);
 	static void AddObject(Object* obj);
 	static void DeleteObject(Object* obj);
 	static double DeltaTime();
 	static Player& GetPlayer();
 	static vec2 MousePos();
 	static vec2 MouseWorldPos();
+	static bool IsColliding(Object* obj);
 	static vector2<int> Resolution();
 	static void RestartGame();
+	static void InitScene();
 	static void SpawnEnemies(int count, Sprite* sprite);
 };

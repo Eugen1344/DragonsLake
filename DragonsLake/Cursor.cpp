@@ -4,7 +4,7 @@
 Cursor::Cursor(vec2 pos, Sprite* sprite) : Object(pos, sprite)
 {
 	isGui = true;
-	collider.active = false;
+	collider.isActive = false;
 }
 
 void Cursor::Tick()

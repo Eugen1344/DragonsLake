@@ -5,9 +5,9 @@ Your task is to implement *simple* crimsonland-like game
 
 You should be able to move your avatar with left/right/up/down butttons +
 Have a reticle following mouse button +
-Enemies should be spawned randomly on a map and run to the player by a shortest path. Enemies should not be spawned too close to the player
+Enemies should be spawned randomly on a map and run to the player by a shortest path. Enemies should not be spawned too close to the player +
 Enemies should have random similar speed +
-Enemies should not pass through each other
+Enemies should not pass through each other +
 Once enemy touches player, player dies and game restarts +
 
 Player can shoot (e.g. by presing left mouse button). +

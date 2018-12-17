@@ -1,3 +1,5 @@
+#include <typeinfo>
+#include <iostream>
 #include "Object.h"
 
 Object::Object(vec2 pos, Sprite* sprite) : pos(pos), sprite(sprite)
@@ -5,7 +7,7 @@ Object::Object(vec2 pos, Sprite* sprite) : pos(pos), sprite(sprite)
 	int w, h;
 	getSpriteSize(sprite, w, h);
 	collider.size = vec2(w, h);
-	collider.active = true;
+	collider.isActive = true;
 }
 
 Object::~Object()

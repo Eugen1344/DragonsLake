@@ -32,6 +32,7 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Settings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h" />
@@ -56,6 +57,7 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="Settings.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt" />

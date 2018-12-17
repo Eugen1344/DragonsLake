@@ -3,6 +3,7 @@
 #include "Framework.h"
 #include "Object.h"
 #include <map>
+#include "Settings.h"
 
 using namespace std;
 
@@ -11,16 +12,18 @@ class Engine : public Framework
 private:
 	vector<Object*> objects;
 	map<Object*, bool> objectChanges;
-public:
 	bool restart = false;
+public:
 	bool close = false;
 	double deltaTime;
 	double prevTickCount;
-	Engine();
+	Engine(Settings& settings);
 	void AddObject(Object* obj);
 	void DeleteObject(Object* obj);
 	void PreInit(int& width, int& height, bool& fullscreen) override;
 	bool Init() override;
+	void Restart();
+	void ReinitGame();
 	void Close() override;
 	bool Tick() override;
 	void DetectCollisions();

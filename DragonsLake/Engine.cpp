@@ -4,9 +4,11 @@
 #include "Game.h"
 #include "Cursor.h"
 #include "Camera.h"
+#include "Settings.h"
 
-Engine::Engine()
+Engine::Engine(Settings& settings)
 {
+	Game::settings = settings;
 	deltaTime = 0;
 	prevTickCount = 0;
 	Game::engine = this;
@@ -24,48 +26,62 @@ void Engine::DeleteObject(Object* obj)
 
 void Engine::PreInit(int& width, int& height, bool& fullscreen)
 {
-	width = 800;
-	height = 600;
-	Game::screenResolution = vector2<int>(width, height);
+	width = Game::GetSettings().screenResolution.x;
+	height = Game::GetSettings().screenResolution.y;
 	fullscreen = false;
 }
 
 bool Engine::Init()
 {
 	showCursor(false);
-	AddObject(new Cursor(vec2(), createSprite("reticle.png")));
-
-	Sprite* playerSprite = createSprite("avatar.jpg");
-	vector2<int> spriteSize;
-	getSpriteSize(playerSprite, spriteSize.x, spriteSize.y);
-
-	Player* player = new Player(static_cast<vector2<double>>((Game::screenResolution - spriteSize) / 2), playerSprite);
-	AddObject(player);
-	Game::player = player;
-
-	Sprite* enemySprite = createSprite("enemy.png");
-	Game::SpawnEnemies(Game::enemiesCount, enemySprite);
+	Game::InitScene();
 	return true;
+}
+
+void Engine::Restart()
+{
+	restart = true;
+}
+
+void Engine::ReinitGame()
+{
+	for (auto obj : objectChanges)
+	{
+		if (obj.second)
+			delete obj.first;
+	}
+	objectChanges.clear();
+	for (auto obj : objects)
+	{
+		delete obj;
+	}
+	objects.clear();
+	Game::InitScene();
+	Camera::pos = vec2();
+	restart = false;
 }
 
 void Engine::Close()
 {
-	for (Object* obj : objects)
-	{
-		delete obj;
-	}
 }
 
 bool Engine::Tick()
 {
+	if (restart)
+		ReinitGame();
+
 	for (auto obj : objectChanges)
 	{
 		if (obj.second)
 			objects.push_back(obj.first);
 		else
 		{
-			objects.erase(find(objects.begin(), objects.end(), obj.first));
-			delete obj.first;
+			auto found = find(objects.begin(), objects.end(), obj.first);
+			if (found != objects.end())
+			{
+				objects.erase(found);
+				delete obj.first;
+			}
 		}
 	}
 	objectChanges.clear();
@@ -84,7 +100,7 @@ bool Engine::Tick()
 	deltaTime = (getTickCount() - prevTickCount) / 1000.0;
 	prevTickCount = getTickCount();
 
-	return restart;
+	return close;
 }
 
 void Engine::DetectCollisions()
@@ -108,7 +124,10 @@ bool Engine::IsColliding(Object* obj)
 {
 	for (Object* collisionObj : objects)
 	{
-		if (obj->collider.IsColliding(collisionObj->collider, obj->pos, collisionObj->pos))
+		if (collisionObj == obj)
+			continue;
+
+		if (!collisionObj->collider.isTrigger && obj->collider.IsColliding(collisionObj->collider, obj->pos, collisionObj->pos))
 			return true;
 	}
 	return false;

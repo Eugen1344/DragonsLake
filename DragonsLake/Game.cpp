@@ -1,14 +1,23 @@
+#include <cstdlib>
 #include "Game.h"
 #include "Camera.h"
 #include "Enemy.h"
+#include "Cursor.h"
 
 Engine* Game::engine;
-vector2<int> Game::screenResolution;
 Player* Game::player;
 vec2 Game::mousePos;
-int Game::enemiesCount = 5;
-int Game::ammoCount = 3;
-vector2<int> Game::mapSize = vector2<int>(1000, 1000);
+Settings Game::settings;
+
+Settings Game::GetSettings()
+{
+	return settings;
+}
+
+void Game::SetSettings(Settings& settings)
+{
+	Game::settings = settings;
+}
 
 void Game::AddObject(Object* obj)
 {
@@ -40,14 +49,30 @@ vec2 Game::MouseWorldPos()
 	return mousePos + Camera::pos;
 }
 
-vector2<int> Game::Resolution()
+bool Game::IsColliding(Object* obj)
 {
-	return screenResolution;
+	return engine->IsColliding(obj);
 }
 
 void Game::RestartGame()
 {
-	engine->restart = true;
+	engine->Restart();
+}
+
+void Game::InitScene()
+{
+	AddObject(new Cursor(vec2(), createSprite("reticle.png")));
+
+	Sprite* playerSprite = createSprite("avatar.jpg");
+	vector2<int> spriteSize;
+	getSpriteSize(playerSprite, spriteSize.x, spriteSize.y);
+
+	Player* player = new Player(static_cast<vector2<double>>((settings.screenResolution - spriteSize) / 2), playerSprite);
+	AddObject(player);
+	Game::player = player;
+
+	Sprite* enemySprite = createSprite("enemy.png");
+	SpawnEnemies(settings.enemiesCount, enemySprite);
 }
 
 void Game::SpawnEnemies(int count, Sprite* sprite)
@@ -62,13 +87,13 @@ void Game::SpawnEnemies(int count, Sprite* sprite)
 		{
 			intersecting = false;
 
-			pos = vec2(rand() % (mapSize.x + 1), rand() % (mapSize.y + 1));
-			for (Enemy* enemy : enemies)
+			pos = vec2(rand() % (settings.mapSize.x + 1), rand() % (settings.mapSize.y + 1));
+			/*for (Enemy* enemy : enemies)
 			{
-				if (pos.distance(enemy->pos) < (enemy->collider.size * 2).length())
+				if (pos.distance(enemy->pos) < (enemy->collider.size).length())
 					intersecting = true;
 
-			}
+			}*/
 			if (pos.distance(GetPlayer().pos) < 500)
 				intersecting = true;
 		} while (intersecting);

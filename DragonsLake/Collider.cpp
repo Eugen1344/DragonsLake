@@ -4,17 +4,17 @@
 
 Collider::Collider()
 {
-	active = false;
+	isActive = false;
 }
 
 Collider::Collider(vec2 pos, vec2 size) : pos(pos), size(size)
 {
-	active = true;
+	isActive = true;
 }
 
 bool Collider::IsColliding(const Collider& collider, vec2 base, vec2 baseTarget) const
 {
-	if (!active || !collider.active)
+	if (!isActive || !collider.isActive)
 		return false;
 
 	vec2 pos1 = pos + base;

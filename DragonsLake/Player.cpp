@@ -3,13 +3,14 @@
 #include "Camera.h"
 #include <iostream>
 
-Player::Player(vec2 pos, Sprite* sprite) : Object(pos, sprite), speed(200), rifle(Game::ammoCount, createSprite("bullet.png"))
+Player::Player(vec2 pos, Sprite* sprite) : Object(pos, sprite), speed(300), rifle(Game::GetSettings().ammoCount, createSprite("bullet.png"))
 {
+	collider.isTrigger = true;
 }
 
 void Player::Tick()
 {
-	vec2 move = movement.normalized() * Game::DeltaTime() * speed;
+	vec2 move = movement.normalized() * (Game::DeltaTime() * speed);
 	pos += move;
 	Camera::pos += move;
 }
